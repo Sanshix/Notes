@@ -1,6 +1,7 @@
 ﻿git安装完成后设置名字和email：
     $ git config --global user.name "Your Name"
     $ git config --global user.email "email@example.com"
+name和email值需要和github的一致，提交代码才会被认为是自己的账号提交的
 git初始化仓库（前提是选择好目录）：
     $ git init
 添加demo文件到仓库：
@@ -96,3 +97,10 @@ git初始化仓库（前提是选择好目录）：
 
   如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
 -------------------------------------
+关于add命令
+    如果有很多改动可以通过 git add -A .来一次添加所有改变的文件。
+注意 -A 选项后面还有一个句点.
+git add -A 表示添加所有内容（新增、编辑、删除），
+git add .  表示添加所有内容（新增、编辑、删除），
+git add -u 表示添加编辑或者删除的文件，不包括新添加的文件。
+---------------------------------------
