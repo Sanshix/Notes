@@ -1,0 +1,41 @@
+打开Redis：
+    在cmd窗口Redis目录下运行   redis-server.exe redis.conf 打开redis或者直接在文件目录中运行redis-server文件；
+    新建cmd窗口进入redis目录运行  redis-cli.exe -h 127.0.0.1 -p 6379 或直接在文件目录中运行redis-cli文件，执行后即可对redis为所欲为；
+
+查看配置项：
+    CONFIG GET 配置项名；//可查看相应配置参数,*可查看所有配置项；
+    CONFIG SET 配置项名 配置参数 ；//对相应配置参数进行编辑；
+
+数据类型：
+    string（字符串）：一个key对应一个value(相当于变量)
+        SET key value //创建
+        GET key    //获取
+        //一个键最大能存储512MB
+        //
+    hash(哈希): 一个键值对集合（相当于数组）
+        HMSET key value value1 value2 value3 //创建
+        HGETALL key  //读取
+        //每个 hash 可以存储 232 - 1 键值对（40多亿）
+        //
+    list(列表): 字符串列表（数字排序,内容不能重复）
+        lpush key value //向key插入值
+        lrange key 0 10 //读取key的0到10的值
+
+    set(集合): string类型的无序集合（内容不能重复)
+        sadd key value //创建
+        smembers key //读取
+
+    zset(集合)：有序集合（内容不能重复）
+        zadd key 0 value  //创建
+        zrangebyscore key 0 100 //读取
+
+PHP与Redis：
+
+        $redis = new Redis();   //创建对象
+        $redos -> connect('127.0.0.1',6379);    //链接Redis服务
+        $redis -> ping();   //测试服务是否成功运行，成功则返回pong
+        $redis -> set("fuck","you");    //设置key为fuck的值为you
+        jedis.get("fuck");  //读取fuck的值
+        $redis -> lpush('fucks','jack');    //存储数据到列表中
+        $msg = $redis -> lrange("fucks",0 ,5);  //读取列表中的值
+        $redis -> keys("*");    //读取所有键

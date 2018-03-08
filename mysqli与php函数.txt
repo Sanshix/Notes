@@ -1,0 +1,27 @@
+mysqli_connect(服务器地址，用户名，密码，[库]);  //连接MySQL
+mysqli_select_db(MySQL连接，库);   // 更改连接的库；
+mysqli_query($result,"set names 'UTF8'");   //更改编码方式；
+
+mysqli-query(链接函数，SQL);   //执行sql命令；
+mysqli_num_rows($query);     //获得查询结果影响的行数，只对查询有效，可用于判断sql是否生效；
+mysqli_affected_rows($result)  //获得增、删、改的结果影响的行数，不对查询有效，可用于判断sql是否生效；
+
+
+mysqli-fetch_row($query); //返回查询的值，保存在数组里，没有的时候返回FALSE，调用一次自动返回下一条记录；
+mysqli_fetch_array($query,[mysqli_assoc]); //作用同上，但存储方式是同时产生数字和关联数组，可用字段名访问；
+
+mysqli-close($connect); //关闭连接， 成功返回TRUE，失败返回FALSE；
+
+mysqli_free_result($query);; //释放结果内存
+
+
+
+________________________________________________________________________
+插入当前时间：
+insert into tablename (fieldname) values (now()) 
+
+时间函数的选用说明：
+
+ NOW()函数以`'YYYY-MM-DD HH:MM:SS'返回当前的日期时间，可以直接存到DATETIME字段中。 
+ CURDATE()以'YYYY-MM-DD'的格式返回今天的日期，可以直接存到DATE字段中。  
+ CURTIME()以'HH:MM:SS'的格式返回当前的时间，可以直接存到TIME字段中。

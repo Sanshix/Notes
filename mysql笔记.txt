@@ -1,0 +1,68 @@
+在运行中输入cmd,然后在输入框中输入 MySQL -u root -p  然后输入密码登录MySQL数据库管理；如果错误则需要设置环境变量；也可以直接在集成环境图标里进入MySQL控制；
+
+create database 数据库名; //创建数据库;
+show databases; //查询数据库；
+show table; //查询库里的所有表；
+use 数据库名；//使用数据库；
+drop database 数据库名；//删除数据库；
+drop tables 表名 //删除表;
+--------------修改MySQL登录密码：
+use mysql;
+update user set password=PASSWORD('密码') where user='root'; //修改密码
+flush privileges; //保存密码修改；
+------------------
+
+数据类型：整数:Tinyint / int  #最大长度为10     bigint最大长度为20
+          浮点数：FLOAT(总数为，小数点后面的位数)
+          日期:DATETIME //0000-00-00 00:00:00
+          字符串：CHAR(最大长度)//空间固定  /   VARCHAR(M)//空间随内容变化
+字符串类型需要设置长度，否则会error;
+
+——————————————————————————————————————
+创建数据表：
+             create table 表名称（属性名 数据类型 [约束条件],
+                                  属性名 数据类型 [约束条件]
+                                   ）；     //属性名不需要打引号；
+                                        
+设置主键：属性名 数据类型 primary key
+唯一id自增:属性名 数据类型 auto_increment
+
+查看表结构：describe 表名； 或者 desc 表名；
+
+——————————————————————————————————-————
+插入数据：
+
+          insert into 表名 values(值1，值2,..值n);//为所有字段插入值，不用指定字段名；
+          insert into 表名(属性名1，属性名2) values（值1，值2）；//指定字段名插入数据，
+更新数据：
+          update 表名 set 属性名1=属性值1 where 条件；
+删除数据:
+          delete from 表名 where 条件;
+----------------------------------------------------------------------------------
+查询数据：select 字段名 from 表名 where ;
+
+升序：order by 字段名;  降序：order by 字段名 desc;
+按升序查询数据：select 字段名 from 表名 where order by 字段名 ;  降序则在末尾加上desc
+
+模糊查询：select 字段名 from 表名 where 查询属性 [not] like '字符串'; //查询属性即按照条件查询的值；
+
+//not为可选参数，意为不匹配则符合条件 同价与php中的！=，可以用%表示任意长度的字符，用了%后便不能用=
+
+多条件查询:select 字段名 from 表名 where 表达式1 and 表达式2； 
+
+//满足所有条件的才会查询出来，当使用or代替and的时候只要满足其中一个条件即可；
+
+限制查询：select 字段名 from 表名 limit 第几条开始，总条数；  //第几条可以忽略，默认从0开始，
+
+查询不重复: select distinct 属性名 from 表名;
+
+查询记录总数：select count(*) from 表名;
+
+select user();  //查看当前用户;
+select database(); //查看当前数据库；
+select current_date,current_time; //查看当前系统时间；
+sun()函数：select sum(字段名1)，字段名2  from 表名 where ；//求和函数
+avg()函数：select avg(字段名) from 表名; //求平均值
+max()函数//求最大值
+min()函数//求最小值
+

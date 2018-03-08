@@ -1,0 +1,98 @@
+﻿git安装完成后设置名字和email：
+    $ git config --global user.name "Your Name"
+    $ git config --global user.email "email@example.com"
+git初始化仓库（前提是选择好目录）：
+    $ git init
+添加demo文件到仓库：
+    $ git add demo.html
+提交demo文件到仓库(-m后面的内容是本次提交的描述)：
+    $ git commit -m 'this is commit'
+查看当前状态：
+    $ git status
+查看当前为提交的文件的修改情况：
+    $ git diff
+查看提交日志(加上参数--pretty=oneline可省略部分信息)：
+    $ git log
+回滚版本(HEAD^,^表示回滚多少个版本)：
+    $ git reset --hard HEAD^
+查看命令记录(可用于查找最新版本的版本号)：
+    $ git reflog
+撤销当前工作区的demo文件操作（这个文件回到最近一次git commit或git add时的状态）：
+    $ git checkout --demo.html
+撤销暂存区的修改，放回工作区：
+    $ git reset HEAD demo.html
+删除demo文件(删除后要提交才生效)：
+    $ git rm demo.html
+查看配置信息：
+    $ git config -l
+----------------------------
+如果要使用github仓库的话，由于传输是通过SSH加密的，所以需要设置SSH KEY
+创建SSH KEY：
+    $ ssh-keygen -t rsa -C "youremail@example.com"
+创建好后，id_rsa是私钥  id_rsa.pub是公钥
+-----------------------------
+            关联
+关联Github远程仓库(origin是默认的远程库名)：
+    $ git remote add origin git@github.com:huangsanshi/Notes.git
+关联后第一次推送master分支所有内容，关联后push命令便可简化：
+    $ git push -u origin master
+第一次推送后推送命令便不需要加-u：
+    $ git push origin master
+---------------------------------
+        克隆
+从远程仓库克隆库到本地：
+    $ git clone git@github.com:huangsanshi/Notes.git
+--------------------------------
+创建并切换到分支demo：
+    $ git checkout -b demo
+查看当前分支：
+    $ git branch
+切换到master分支：
+    $ git checkout master
+合并指定分支到当前分支：
+    $ git merge demo
+删除分支：
+    $ git branch -d demo
+通过普通模式合并分支，会留下历史分支记录(加上参数--no-ff)：
+    $ git merge --no-ff -m "merge with no-ff" dev
+存储当前工作内容：
+    $ git stash
+查看存储的工作内容：
+    $ git stash list
+恢复存储的工作内容并删除stash：
+    $ git stash pop
+如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除
+创建远程分支在本地：
+    $ git checkout -b dev origin/dev
+建立本地分支和远程分支的关联：
+    $ git branch --set-upstream branch-name origin/branch-name
+查看远程库信息：
+    $ git remote -v
+---------------------
+在当前分支下创建标签：
+    $ git tag <tagname>
+给指定版本分支创建标签：
+    $ git tag <tagname> <branchID>
+查看所有标签：
+    $ git tag
+查看标签详细信息：
+    $ git show <tagname>
+删除标签：
+    $ git tag -d <tagname>
+推送标签到远程(如果推送全部标签，标签名就用--tags)：
+    $ git push origin <tagname>
+删除远程标签(需要先删除相应的本地标签)：
+    $ git push origin :refs/tags/<tagname>
+------------------------------------
+多人协作的工作模式：
+
+  首先，可以试图用git push origin branch-name推送自己的修改；
+
+  如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+
+  如果合并有冲突，则解决冲突，并在本地提交；
+
+  没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
+
+  如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
+-------------------------------------

@@ -1,0 +1,9 @@
+1、当你向MySQL输入中文后，用select查询结果中文变成了问号，那你就往下看。
+2、打开cmd，进入mysql，输入show variables like"%char%";可以看到database的默认编码方式，我当时的是latin1.
+3、打开mysql安装文件E:\mysql-5.5.25-winx64，看到里面没有所谓的my.ini.
+4、这种情况要自己配制，如果没有my.ini文件的话，新建文本文档，复制my-innodb-heavy-4G.ini中的所有内容到新建文档，把它改名为my.ini。
+5、打开my.ini，在[client]下添加  default-character-set = gbk
+在[mysqld]下添加  character-set-server = gbk.
+6、重启mysql服务就ok了
+                                                                                 
+                                                                                                                                       HL   
