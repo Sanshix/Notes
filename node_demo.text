@@ -1,0 +1,220 @@
+//获取get请求参数和post参数
+// var util = require('util');
+// var querystring = require('querystring');
+// http.createServer(function(req,res){
+// 	res.writeHead(200,{'Content-Type':'text/plain;charset=utf-8'});
+// 	//获取get参数
+// 	var params = url.parse(req.url,true).query;
+// 	res.write(params.fuck+'\n');
+// 	var post = '';
+// 	//获取post数据
+// 	req.on('data',function(chunk){
+// 		post += chunk;
+// 	});
+// 	req.on('end',function(){
+// 		post = querystring.parse(post);
+// 		res.end(util.inspect(post));
+// 	})
+// }).listen(3000);
+
+//util 函数的继承只会继承在原型中定义的函数，构造函数内部创建的属性和函数不会被继承
+// var util = require('util');
+// function Base() {
+// 	this.name = 'base';
+// 	this.base = 1991;
+// 	this.sayHello = function() {
+// 		console.log('Hello ' + this.name);
+// 	};
+// }
+// Base.prototype.showName = function() {
+// 	console.log(this.name);
+// };
+// function Sub() {
+// 	this.name = 'sub';
+// }
+// util.inherits(Sub, Base);
+// var objBase = new Base();
+// objBase.showName();
+// objBase.sayHello();
+// console.log(objBase);
+// var objSub = new Sub();
+// objSub.showName();
+// //objSub.sayHello();
+// console.log(objSub);
+// console.log(util.inspect(objBase));
+// console.log(util.inspect(objBase, true));
+
+
+//根据路由获取请求
+// var http = require('http');
+// var url = require('url');
+//
+// function start(route){
+// 	http.createServer(function(request,response){
+// 		var pathname = url.parse(request.url).pathname;
+// 		console.log(pathname);
+// 		console.log('y');
+// 		route(pathname);
+// 		response.writeHead(200,{"content-type":"text/plain"});
+// 		response.write('Hello World');
+// 		response.end();
+// 	}).listen(88);
+// }
+// exports.start = start;
+
+
+//从流中读数据后写入流再读最新流数据
+// var fs = require("fs");
+// var zlib = require('zlib');
+// let data = '';
+// var fuck = '\n fuck you!';
+// //创建可读流
+// var readerstream = fs.createReadStream('demo.txt');
+// //设置编码utf8
+// readerstream.setEncoding('UTF8');
+// // readerstream.pipe(zlib.createGzip())
+// // 	.pipe(fs.createWriteStream('demo.txt.gz'));
+// // console.log('压缩完成！');
+// fs.createReadStream('demo.txt.gz')
+// 	.pipe(zlib.createGunzip())
+// 	.pipe(fs.createWriteStream('input.txt'));
+// console.log('解压完成！');
+// //处理流事件
+// readerstream.on('data',function(chunk){
+// 	//当有数据可读的时候
+// 	data += chunk;
+// 	console.log(data);
+// 	//这里打印的是写入前的原数据
+// 	//这里调用一次后 调用第二次的时候chunk返回的是undefined
+// });
+// readerstream.on('end',function(){
+// 	//没有可读数据时
+// 	writes(data);
+// });
+// readerstream.on('error',function(err){
+// 	console.log(err.stack);
+// });
+// console.log('第一次读取完毕！');
+// //写入操作
+// let writes = function(datas){
+// 	let writes = fs.createWriteStream('demo.txt');
+// 	//追加数据
+// 	writes.write(datas+fuck,'UTF8');
+// 	//标记文件末尾
+// 	writes.end();
+// 	writes.on('finish',function(){
+// 		console.log('写入成功！');
+// 		reads();
+// 	})
+// 	writes.on('error',err => console.log(err.stack));
+// 	console.log('写入程序执行完毕');
+// };
+// //写入后的读取
+// let reads = function(){
+// 	let reads_data = fs.createReadStream('demo.txt');
+// 	//设置编码utf8
+// 	reads_data.setEncoding('UTF8');
+// 	//处理流事件
+// 	reads_data.on('data',function(chunk){
+// 		//当有数据可读的时候
+// 		data = chunk;
+// 		console.log(data);
+// 		//这里打印出来的是写入后的新数据
+// 	});
+// 	// reads_data.on('end',function(){
+// 	// 	reads_data.pipe(zlib.createGzip())
+// 	// 		.pipe(fs.createWriteStream('demo.txt.gz'));
+// 	// 	console.log('压缩完成！');
+// 	// });
+// };
+
+
+//Buffer实例
+// buf = Buffer.alloc(14);
+// len = buf.write("www.runoob.com");
+// json = JSON.stringify(buf);
+// console.log("写入字节数 : "+  len);
+// 返回14
+// console.log(buf.toString());
+// console.log(json);
+// console.log(JSON.parse(json));
+
+
+
+//events对象的error事件
+// var events = require('events');
+// var emitter = new events.EventEmitter();
+// emitter.on('error',function(err){
+// 	console.error('Error:',err);
+// });
+// emitter.emit('error');
+
+
+//多事件实例（EventsEmitter对象）
+// var events = require('events');
+// var eventEmitter = new events.EventEmitter();
+// // 监听器 #1
+// var listener1 = function listener1() {
+// 	console.log('监听器 listener1 执行。');
+// 	// 移除监绑定的 listener1 函数
+// 	eventEmitter.removeListener('connection', listener1);
+// 	console.log("listener1 不再受监听。");
+// }
+// // 监听器 #2
+// var listener2 = function listener2() {
+// 	console.log('监听器 listener2 执行。');
+// }
+// // 绑定 connection 事件，处理函数为 listener1
+// eventEmitter.addListener('connection', listener1);
+// // 绑定 connection 事件，处理函数为 listener2
+// eventEmitter.on('connection', listener2);
+// var eventListeners = eventEmitter.listenerCount('connection');
+// console.log(eventListeners + " 个监听器监听连接事件。");
+// // 处理 connection 事件
+// eventEmitter.emit('connection');
+// // 触发连接事件
+// eventEmitter.emit('connection');
+// eventListeners = eventEmitter.listenerCount('connection');
+// console.log(eventListeners + " 个监听器监听连接事件。");
+// console.log("程序执行完毕。");
+
+
+//事件循环实例
+// var events = require('events');
+// // 创建eventEmitter对象
+// var event = new events.EventEmitter();
+// var connect = function connected(){
+// 	console.log('连接成功！');
+// 	//触发事件
+// 	event.emit('data_received');
+// }
+// //绑定事件
+// event.on('demo',connect);
+// //匿名函数绑定data_received函数
+// event.on('data_received',function(){
+// 	console.log('数据接收成功');
+// })
+// //触发事件
+// event.emit('demo');
+// console.log('执行完毕');
+
+
+// 非阻塞实例
+// var fs = require('fs');
+// var data = fs.readFile('demos.txt',function(err,data){
+// 	if(err) return console.log(err.stack);
+// 	console.log(data.toString());
+// });
+// console.log('end');
+
+
+//响应请求实例
+// var http = require('http');
+// var express = require('express');
+//
+// http.createServer(function (request,response){
+// 	response.writeHead(200,{'content-Type':'text/plain'});
+// 	response.end('Hellow Worldls\nJack');
+// }).listen(8888);
+//
+// console.log('Server running at 666');
